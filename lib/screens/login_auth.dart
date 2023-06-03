@@ -9,7 +9,7 @@ import 'login_screen.dart';
 // import 'home_page.dart';
 
 class AuthPage extends StatelessWidget {
-  //const AuthPage({super.key});
+  const AuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           // user is logged in
           if (snapshot.hasData) {
-            return HomePageCosole();
+            return const HomePageCosole();
           }
 
           // user is NOT logged in

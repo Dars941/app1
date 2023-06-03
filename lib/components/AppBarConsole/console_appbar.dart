@@ -34,8 +34,10 @@ class _ConsoleAppBarState extends State<ConsoleAppBar> {
               style: TextStyle(color: Colors.white, fontSize: 12)),
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (ctx) => const Settting()),
+              Navigator.of(context)?.push(
+                MaterialPageRoute(
+                  builder: (ctx) => const Settting(),
+                ),
               );
             },
             icon: const Icon(Icons.settings),

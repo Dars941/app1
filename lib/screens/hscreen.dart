@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 //import 'package:flutter_joystick/flutter_joystick.dart';
 
 import 'package:toggle_switch/toggle_switch.dart';
@@ -34,7 +35,6 @@ class _HomePageCosoleState extends State<HomePageCosole> {
     )..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {
-          _controller.play();
           _controller.setLooping(true);
         });
       });
@@ -68,7 +68,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
   }
 
   void updateDb(Map<String, dynamic> data) {
-    _ref!.update(data);
+    _ref!.update(data).toString();
   }
 
   // final user = FirebaseAuth.instance.currentUser!;
@@ -122,12 +122,12 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                     Slider(
                                       min: 0,
                                       max: 180,
-                                      value: lefthand,
+                                      value: lefthand as double,
                                       onChanged: (val) {
                                         setState(() {
                                           lefthand = val;
                                         });
-                                        updateDb({'lefthand': val});
+                                        updateDb({'lefthand': val.toDouble()});
                                       },
                                     ),
                                     ToggleSwitch(
@@ -303,7 +303,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                         setState(() {
                                           righthand = val;
                                         });
-                                        updateDb({'righthand': val});
+                                        updateDb({'righthand': val.toDouble()});
                                       },
                                     ),
                                     Joystick(),

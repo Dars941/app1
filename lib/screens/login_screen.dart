@@ -10,8 +10,9 @@ void main() {
   runApp(welcomescreen());
 }
 
-
 class welcomescreen extends StatefulWidget {
+  const welcomescreen({super.key});
+
   @override
   State<welcomescreen> createState() => _welcomescreenState();
 }
@@ -27,11 +28,11 @@ class _welcomescreenState extends State<welcomescreen> {
         email: robo_idController.text.trim(),
         password: passController.text.trim());
   }
+
   void dispose() {
     robo_idController.dispose();
     passController.dispose();
     super.dispose();
-
   }
 
   @override
@@ -39,7 +40,6 @@ class _welcomescreenState extends State<welcomescreen> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
-
       DeviceOrientation.landscapeLeft,
     ]);
     return MaterialApp(
@@ -51,7 +51,7 @@ class _welcomescreenState extends State<welcomescreen> {
                   image: AssetImage('./assets/images/robot.jpg'),
                   fit: BoxFit.cover)),
           child: Padding(
-            padding: EdgeInsets.only(bottom : 10),
+            padding: EdgeInsets.only(bottom: 10),
             child: CustomScrollView(
               slivers: [
                 SliverFillRemaining(
@@ -112,18 +112,14 @@ class _welcomescreenState extends State<welcomescreen> {
                                     backgroundColor: Colors.yellow,
                                     side: BorderSide(
                                       width: 5,
-                                      color: Colors.black
-                                      ,
+                                      color: Colors.black,
                                     ),
                                     elevation: 3,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(12)),
+                                            BorderRadius.circular(12)),
                                   ),
-                                  onPressed:
-                                    UserSignIn,
-
-
+                                  onPressed: UserSignIn,
                                   child: Text(
                                     "►Connect ",
                                     style: TextStyle(
@@ -138,11 +134,12 @@ class _welcomescreenState extends State<welcomescreen> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ForgetPassword(),),);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => ForgetPassword(),
+                                      ),
+                                    );
                                   },
-
-
-
                                   child: Text(
                                     "forget password?",
                                     textAlign: TextAlign.end,
