@@ -23,7 +23,7 @@ class Settting extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Color(0xFF040404),
       appBar: AppBar(
         title: const Text("Settings"),
         centerTitle: true,
@@ -33,24 +33,38 @@ class Settting extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              SizedBox(
-                width: 120,
-                height: 120,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: const CircleAvatar(
-                      child: Image(
-                          image: AssetImage('./assets/images/robot.jpg'))),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text("Robot id  "),
-              Text(
-                user.email!,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: const CircleAvatar(
+                          child: Image(
+                              image: AssetImage('./assets/images/robot.jpg'))),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    children: [
+                      const Text(
+                        "Robot id  ",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Text(
+                        user.email!,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 10,
@@ -63,10 +77,10 @@ class Settting extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     //  primary: Colors.yellow,
-                    backgroundColor: Colors.yellow,
+                    backgroundColor: Color(0xFF040404),
                     side: const BorderSide(
                       width: 5,
-                      color: Colors.black,
+                      color: Color.fromRGBO(12, 16, 57, 1),
                     ),
                     elevation: 3,
                     shape: RoundedRectangleBorder(
@@ -81,16 +95,21 @@ class Settting extends StatelessWidget {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
-                        color: Colors.black),
+                        color: Color.fromRGBO(12, 16, 57, 1)),
                   ),
                 ),
+              ),
+              const Text(
+                "General Settings",
+                textAlign: TextAlign.left,
+                style: TextStyle(color: Colors.white, fontSize: 23),
               ),
               const SizedBox(
                 height: 30,
               ),
               const Divider(),
               SettingsContent(
-                tittle: "About Us",
+                tittle: "About us",
                 icon: Icons.info_outline,
                 onPress: () {},
                 endIcon: true,

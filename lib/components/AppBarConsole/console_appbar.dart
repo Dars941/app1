@@ -16,7 +16,7 @@ class _ConsoleAppBarState extends State<ConsoleAppBar> {
     String dateStr = today.toString().substring(0, 10);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: Colors.deepPurple,
+      color: Color.fromRGBO(12, 16, 57, 1),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

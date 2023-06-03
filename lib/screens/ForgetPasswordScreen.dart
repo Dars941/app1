@@ -54,59 +54,75 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     ]);
     return SafeArea(
       child: Scaffold(
-        //appBar: AppBar(),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('./assets/images/robot.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Enter Your Email To reset Password",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.yellow),
-              ),
-              const SizedBox(height: 50),
-              LoginTextField(
-                controller: emailIdController,
-                hintText: 'id',
-                labelText: 'Robot id',
-                obscureText: false,
-                obsuringCharacter: '',
-                icons: Icons.person,
-              ),
-              const SizedBox(height: 50),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    //  primary: Colors.yellow,
-                    backgroundColor: Colors.yellow,
-                    side: BorderSide(
-                      width: 5,
-                      color: Colors.black,
-                    ),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                  ),
-                  onPressed: ResetPassword,
-                  child: const Text(
-                    "Reset password",
-                    style: TextStyle(color: Colors.black),
-                  ),
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('./assets/images/placeholder_bg.jpg'),
+                  fit: BoxFit.cover,
                 ),
               ),
-            ],
-          ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.7),
+                    Colors.transparent,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Enter Your Email To Reset Password",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  LoginTextField(
+                    controller: emailIdController,
+                    hintText: 'id',
+                    labelText: 'Robot id',
+                    obscureText: false,
+                    obsuringCharacter: '',
+                    icons: Icons.person,
+                  ),
+                  const SizedBox(height: 50),
+                  SizedBox(
+                    height: 60,
+                    width: 300,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow,
+                        side: BorderSide(
+                          width: 5,
+                          color: Colors.black,
+                        ),
+                        elevation: 3,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: ResetPassword,
+                      child: const Text(
+                        "Reset Password",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
