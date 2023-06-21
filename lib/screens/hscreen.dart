@@ -100,7 +100,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                 String alarmmode = data['alarmmode'] ?? 'off';
                 String lightmode = data['lightmode'] ?? 'off';
                 String lockermode = data['lockermode'] ?? 'off';
-                String vaccumMode = data['vaccumMode'] ?? 'off';
+                String vaccumMode = data['vaccumMode'] ?? 'false';
 
                 return Column(
                   children: [
@@ -280,10 +280,10 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                       onToggle: (index) {
                                         switch (index) {
                                           case 0:
-                                            updateDb({'vaccumMode': 'on'});
+                                            updateDb({'vaccumMode': 'true'});
                                             break;
                                           case 1:
-                                            updateDb({'vaccumMode': 'off'});
+                                            updateDb({'vaccumMode': 'false'});
                                             break;
                                           default:
                                             break;

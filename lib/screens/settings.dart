@@ -80,7 +80,7 @@ class Settting extends StatelessWidget {
                     backgroundColor: Color(0xFF040404),
                     side: const BorderSide(
                       width: 5,
-                      color: Color.fromRGBO(12, 16, 57, 1),
+                      color: Color(0xFF040404),
                     ),
                     elevation: 3,
                     shape: RoundedRectangleBorder(
@@ -95,7 +95,7 @@ class Settting extends StatelessWidget {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
-                        color: Color.fromRGBO(12, 16, 57, 1)),
+                        color: Color(0xFF040404)),
                   ),
                 ),
               ),
