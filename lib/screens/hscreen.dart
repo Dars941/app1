@@ -31,7 +31,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
     super.initState();
     initializeFirebase();
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+      'https://stistcam.serveo.net/0/stream',
     )..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {

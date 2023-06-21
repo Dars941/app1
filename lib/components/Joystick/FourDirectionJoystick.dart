@@ -92,16 +92,26 @@ class _JoystickState extends State<Joystick> {
     // Print movement direction
     if (dx > 0.4) {
       print('Move Right');
-      updateDb('Right');
+      updateDb('r');
     } else if (dx < -0.4) {
       print('Move Left');
-      updateDb('Left');
-    } else if (dy > 0.4) {
+      updateDb('l');
+    }
+    else if (dy > 0.4) {
       print('Move Down');
-      updateDb('Down');
+      updateDb('b');
+
+    }
+    else if (dy > 0.4) {
+      print('Move Down');
+      updateDb('b');
+
     } else if (dy < -0.4) {
       print('Move Up');
-      updateDb('Up');
+      updateDb('f');
+    }
+    else {
+      updateDb('s');
     }
 
     // Update Firebase Realtime Database
