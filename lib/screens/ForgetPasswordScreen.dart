@@ -59,7 +59,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('./assets/images/placeholder_bg.jpg'),
+                  image: AssetImage('./assets/images/robot.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),

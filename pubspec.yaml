@@ -44,6 +44,7 @@ dependencies:
   toggle_switch: ^2.0.1
   firebase_database: ^10.2.1
   video_player: ^2.6.1
+  sensors_plus: ^3.0.2
   
 
 dev_dependencies:

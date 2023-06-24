@@ -13,7 +13,7 @@ class _JoystickState extends State<Joystick> {
   double joystickY = 0.0;
 
   void updateDb(String direction) {
-    _ref.child('joystick').set(direction);
+    _ref.child('movement').set(direction);
   }
 
   @override

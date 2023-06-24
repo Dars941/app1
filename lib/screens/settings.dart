@@ -10,11 +10,7 @@ class Settting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      // DeviceOrientation.portrait,
 
-      DeviceOrientation.landscapeLeft,
-    ]);
     final user = FirebaseAuth.instance.currentUser!;
 
     // sign user out method

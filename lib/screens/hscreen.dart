@@ -20,7 +20,35 @@ class HomePageCosole extends StatefulWidget {
 }
 
 class _HomePageCosoleState extends State<HomePageCosole> {
-  late VideoPlayerController _controller;
+  double _lefthand = 0;
+  double _righthand = 0;
+  int valInt1 = 0;
+  int valInt2 = 0;
+
+  final databaseReference = FirebaseDatabase.instance.reference();
+
+  void _updateSliderValue(double value) {
+    setState(() {
+      _lefthand = value;
+      valInt1 = value.toInt();
+    });
+    _updateFirebaseValue('lefthand', valInt1.toString());
+  }
+
+  void _updateSliderValueRight(double value) {
+    setState(() {
+      _righthand = value;
+      valInt2 = value.toInt();
+    });
+    _updateFirebaseValue('righthand', valInt2.toString());
+  }
+
+  void _updateFirebaseValue(String fieldName, String value) {
+    // Update the value in Firebase Realtime Database
+    databaseReference.update({fieldName: value});
+  }
+
+   late VideoPlayerController _controller;
   bool booleanValue = false;
   DatabaseReference? _ref;
 
@@ -74,6 +102,10 @@ class _HomePageCosoleState extends State<HomePageCosole> {
 
   // final user = FirebaseAuth.instance.currentUser!;
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -95,12 +127,12 @@ class _HomePageCosoleState extends State<HomePageCosole> {
 
                 final data = snapshot.data!.value as Map<dynamic, dynamic>;
 
-                double lefthand = (data['lefthand'] ?? 0).toDouble();
-                double righthand = (data['righthand'] ?? 0).toDouble();
+
+
                 String alarmmode = data['alarmmode'] ?? 'off';
                 String lightmode = data['lightmode'] ?? 'off';
                 String lockermode = data['lockermode'] ?? 'off';
-                String vaccumMode = data['vaccumMode'] ?? 'false';
+                bool vaccum = data['vaccum'] ?? false;
 
                 return Column(
                   children: [
@@ -109,8 +141,9 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                       child: Stack(
                         children: [
                           _controller.value.isInitialized
+
                               ? VideoPlayer(_controller)
-                              : Container(color: Colors.black),
+                              : Container(color: Colors.red),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
@@ -123,13 +156,8 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                     Slider(
                                       min: 0,
                                       max: 180,
-                                      value: lefthand as double,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          lefthand = val;
-                                        });
-                                        updateDb({'lefthand': val.toDouble()});
-                                      },
+                                      value: _lefthand,
+                                      onChanged: _updateSliderValue,
                                     ),
                                     ToggleSwitch(
                                       iconSize: 15.0,
@@ -262,7 +290,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                     ToggleSwitch(
                                       minWidth: 60.0,
                                       initialLabelIndex:
-                                          labels.indexOf(vaccumMode),
+                                          labels.indexOf(vaccum.toString()),
                                       cornerRadius: 20.0,
                                       activeFgColor: Colors.black,
                                       inactiveBgColor: Colors.grey,
@@ -280,10 +308,10 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                       onToggle: (index) {
                                         switch (index) {
                                           case 0:
-                                            updateDb({'vaccumMode': 'true'});
+                                            updateDb({'vaccum': true});
                                             break;
                                           case 1:
-                                            updateDb({'vaccumMode': 'false'});
+                                            updateDb({'vaccum': false});
                                             break;
                                           default:
                                             break;
@@ -297,15 +325,10 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Slider(
-                                      value: righthand,
+                                      value: _righthand,
                                       min: 0,
                                       max: 180,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          righthand = val;
-                                        });
-                                        updateDb({'righthand': val.toDouble()});
-                                      },
+                                      onChanged: _updateSliderValueRight,
                                     ),
                                     Joystick(),
                                   ],
