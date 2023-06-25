@@ -1,13 +1,15 @@
 import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firstapp/widgets/console_widgets/joystick_control.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-//import 'package:flutter_joystick/flutter_joystick.dart';
+import 'package:flutter_joystick/flutter_joystick.dart';
 
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:video_player/video_player.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../components/AppBarConsole/console_appbar.dart';
 import '../components/Joystick/FourDirectionJoystick.dart';
@@ -24,6 +26,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
   double _righthand = 0;
   int valInt1 = 0;
   int valInt2 = 0;
+
 
   final databaseReference = FirebaseDatabase.instance.reference();
 
@@ -48,7 +51,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
     databaseReference.update({fieldName: value});
   }
 
-   late VideoPlayerController _controller;
+  late WebViewController _controller;
   bool booleanValue = false;
   DatabaseReference? _ref;
 
@@ -58,15 +61,26 @@ class _HomePageCosoleState extends State<HomePageCosole> {
   void initState() {
     super.initState();
     initializeFirebase();
-    _controller = VideoPlayerController.network(
-      'https://stistcam.serveo.net/0/stream',
-    )..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {
-          _controller.play();
-          _controller.setLooping(true);
-        });
-      });
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://stistcam.serveo.net/0/stream')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse('https://stistcam.serveo.net/0/stream'));
     _ref = FirebaseDatabase.instance.ref();
   }
 
@@ -103,7 +117,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
   // final user = FirebaseAuth.instance.currentUser!;
   @override
   void dispose() {
-    _controller.dispose();
+    //_controller.dispose();
     super.dispose();
   }
   Widget build(BuildContext context) {
@@ -134,16 +148,18 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                 String lockermode = data['lockermode'] ?? 'off';
                 bool vaccum = data['vaccum'] ?? false;
 
+
                 return Column(
                   children: [
                     const ConsoleAppBar(),
                     Expanded(
                       child: Stack(
                         children: [
-                          _controller.value.isInitialized
 
-                              ? VideoPlayer(_controller)
-                              : Container(color: Colors.red),
+
+
+                               WebViewWidget(controller: _controller),
+                              // Container(color: Colors.red),
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
@@ -289,8 +305,9 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                     const SizedBox(height: 10),
                                     ToggleSwitch(
                                       minWidth: 60.0,
-                                      initialLabelIndex:
-                                          labels.indexOf(vaccum.toString()),
+                                      initialLabelIndex: vaccum ? 0 : 1,
+                                     // initialLabelIndex:
+                                       //   labels.indexOf(vaccum.toString()),
                                       cornerRadius: 20.0,
                                       activeFgColor: Colors.black,
                                       inactiveBgColor: Colors.grey,
@@ -307,6 +324,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                       ],
                                       onToggle: (index) {
                                         switch (index) {
+
                                           case 0:
                                             updateDb({'vaccum': true});
                                             break;
@@ -330,7 +348,39 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                       max: 180,
                                       onChanged: _updateSliderValueRight,
                                     ),
-                                    Joystick(),
+                                    //JoystickH(),
+                                    Joystick(
+                                      mode: JoystickMode.horizontalAndVertical,
+                                      base: JoystickSquareBase(mode: JoystickMode.horizontalAndVertical),
+                                      stickOffsetCalculator: const RectangleStickOffsetCalculator(),
+                                      listener: (details) {
+                                        double dx = details.x;
+                                        double dy = details.y;
+
+                                        if (dx > 0) {
+                                          print("Move right");
+                                          updateDb({'movement': 'r'});
+                                        } else if (dx < 0) {
+                                          print("Move left");
+                                          updateDb({'movement': 'l'});
+                                        }
+
+                                        if (dy > 0) {
+                                          print("Move backward");
+                                          updateDb({'movement': 'b'});
+                                        } else if (dy < 0) {
+                                          print("Move forward");
+                                          updateDb({'movement': 'f'});
+                                        }
+                                        else if (dx == 0 && dy == 0)  {
+                                          print("stationary");
+                                          print(dx);
+                                          print(dy);
+                                          updateDb({'movement': 's'});
+                                        }
+                                      },
+                                    ),
+
                                   ],
                                 ),
                               ],

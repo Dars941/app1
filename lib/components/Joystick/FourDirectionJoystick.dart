@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class Joystick extends StatefulWidget {
+class JoystickH extends StatefulWidget {
   @override
-  _JoystickState createState() => _JoystickState();
+  _JoystickHState createState() => _JoystickHState();
 }
 
-class _JoystickState extends State<Joystick> {
+class _JoystickHState extends State<JoystickH> {
   DatabaseReference _ref = FirebaseDatabase.instance.reference();
 
   double joystickX = 0.0;
