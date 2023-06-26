@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import './About.dart';
 import '../widgets/Settingscomponents/SettingComponent.dart';
 import 'ForgetPasswordScreen.dart';
 
@@ -10,6 +10,16 @@ class Settting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+      // set the screen in landscape mode
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.landscapeLeft,
+      ]);
+
+
+
 
     final user = FirebaseAuth.instance.currentUser!;
 
@@ -107,7 +117,11 @@ class Settting extends StatelessWidget {
               SettingsContent(
                 tittle: "About us",
                 icon: Icons.info_outline,
-                onPress: () {},
+                onPress: () {  Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => About(),
+                  ),
+                );},
                 endIcon: true,
               ),
               const SizedBox(

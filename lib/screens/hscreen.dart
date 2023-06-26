@@ -14,6 +14,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../components/AppBarConsole/console_appbar.dart';
 import '../components/Joystick/FourDirectionJoystick.dart';
 
+
 class HomePageCosole extends StatefulWidget {
   const HomePageCosole({Key? key}) : super(key: key);
 
@@ -59,6 +60,7 @@ class _HomePageCosoleState extends State<HomePageCosole> {
 
   @override
   void initState() {
+
     super.initState();
     initializeFirebase();
     _controller = WebViewController()
@@ -123,11 +125,13 @@ class _HomePageCosoleState extends State<HomePageCosole> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
+
     ]);
-    return Scaffold(
+    return MaterialApp( home: Scaffold(
+
         backgroundColor: Colors.grey[300],
         body: SafeArea(
+
           child: FutureBuilder(
               future: _ref!.get(),
               builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
@@ -349,9 +353,20 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                       onChanged: _updateSliderValueRight,
                                     ),
                                     //JoystickH(),
-                                    Joystick(
+
+
+                                    Transform.scale(
+                                      scale: 0.8,
+
+
+                                      // Set the scale factor to adjust the size
+                                      child: ClipOval(
+                                      child:Joystick(
+
                                       mode: JoystickMode.horizontalAndVertical,
-                                      base: JoystickSquareBase(mode: JoystickMode.horizontalAndVertical),
+                                      base: JoystickSquareBase(mode: JoystickMode.horizontalAndVertical,),
+
+
                                       stickOffsetCalculator: const RectangleStickOffsetCalculator(),
                                       listener: (details) {
                                         double dx = details.x;
@@ -379,6 +394,8 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                                           updateDb({'movement': 's'});
                                         }
                                       },
+                                      ),
+                                    ),
                                     ),
 
                                   ],
@@ -392,6 +409,8 @@ class _HomePageCosoleState extends State<HomePageCosole> {
                   ],
                 );
               }),
-        ));
+        ),
+    ),
+    );
   }
 }
